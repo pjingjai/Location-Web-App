@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create</title>
+<!--bootstrap-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" src="mapFunctions.js"></script>
+  <style>
+         #map {
+             height: 100%;
+             width:900px;
+             height:582px
+         }
+         #lat, #lng {
+             margin:12px;
+             margin-left:0px;
+         }
+
+  </style>
+<head>
+<body>
+  <script>
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 13.7601771, lng: 100.5250124},
+        zoom: 10
+      });
+    }
+  </script>
+  <div class="container-fluid">
+           <div class="row content">
+               <div class="col-sm-9" id="map"></div>
+               <div class="col-sm-3">
+                <div class="panel panel-default" style="margin-top:6px;">
+                  <div class="panel-body">
+                      <button onclick="loadMarker()" id="lMark" style="margin-right:8px" type="button" class="btn btn-primary">Add Marker</button>
+                      <button onclick="create()" id="creat" type="button" class="btn btn-success disabled">Create Place</button>
+
+                      <div class="form-group" style="margin-top:16px;">
+                           <label for="title">Title:</label>
+                           <textarea class="form-control" rows="1" id="title"></textarea>
+                      </div>
+                      <div class="form-group">
+                           <label for="description">Description:</label>
+                           <textarea class="form-control" rows="1" id="description"></textarea>
+                      </div>
+                      <div class="form-group">
+                           <label for="address">Address:</label>
+                           <textarea class="form-control" rows="1" id="address"></textarea>
+                      </div>
+                      <div class="form-group">
+                           <label for="type">Type:</label>
+                           <textarea class="form-control" rows="1" id="type"></textarea>
+                      </div>
+                      <div class="form-group">
+                           <div style="margin-top:12px;"><b>Latitude: </b><div id="lat">-</div></div>
+                      </div>
+                      <div class="form-group">
+                           <div style="margin-top:12px;"><b>Longitude: </b><div id="lng">-</div></div>
+                      </div>
+                  </div>
+                </div>
+               </div>
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+          async defer></script>
+</body>
+</html>

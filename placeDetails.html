@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Details</title>
+  <!--bootstrap-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <script type="text/javascript" src="mapFunctions.js"></script>
+  <script type="text/javascript">
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 13.7601771, lng: 100.5250124},
+        zoom: 12
+      });
+    }
+  </script>
+  <style>
+      #map {
+        height: 100%;
+        width:900px;
+        height:582px
+      }
+      button {
+          margin-top:10px;
+          width:110px;
+
+      }
+  </style>
+<head>
+<body onload="loadMap_placeDetails()">
+  <div class="container-fluid">
+            <div class="row content">
+                <div class="col-sm-9" id="map"></div>
+                <div class="col-sm-3">
+                    <button style="float: right; margin:8px; margin-top:14px;" type="button" class="btn btn-info btn-xs" onclick="reCenter()">re-center</button>
+                 <div class="panel panel-default" style="margin-top:6px;">
+
+                   <div class="panel-body">
+
+                    <div><b>ID: </b><div id="id"></div></div>
+                    <div><b>Title: </b><div id="title"></div></div>
+                    <div><b>Description: </b><div id="description"></div></div>
+                    <div><b>Address: </b><div id="address"></div></div>
+                    <div><b>Type: </b><div id="type"></div></div>
+                    <div><b>Created At: </b><div id="created"></div></div>
+                    <div><b>Updated At: </b><div id="updated"></div></div>
+                    <div><b>Latitude: </b><div id="lat"></div></div>
+                    <div><b>Longitude: </b><div id="lng"></div></div>
+                    <button onclick="update()" type="button" class="btn btn-primary">Update</button>
+                    <button onclick="del()" type="button" class="btn btn-danger" style="float: right;">Delete</button>
+                   </div>
+                 </div>
+               </div>
+  <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+                  async defer></script>
+</body>
+</html>

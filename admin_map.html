@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Main</title>
+  <!--bootstrap-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <script type="text/javascript" src="mapFunctions.js"></script>
+  <style>
+    table, th, td {
+    border-collapse: collapse;
+    }
+    td, th {
+    border: 2px solid #dddddd;
+    text-align: center;
+    padding: 6px;
+    border:1px solid whitesmoke;
+    }
+
+    p{
+        margin-left:3px;
+    }
+    tr{
+        background-color: #f2f1ea;
+        border:2px solid whitesmoke;
+    }
+    .panel-default {
+            background-color:#f2f1ea;
+            padding:1px;
+            border:2px solid whitesmoke;
+            border-radius:4px;
+        }
+        .panel-body {
+            padding:12px;
+        }
+</style>
+</head>
+<body onload="loadMap()" style="background-color:#eae9de;">
+    <script>
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 13.7601771, lng: 100.5250124},
+          zoom: 1
+        });
+      }
+    load();
+    function load() {
+      http = new XMLHttpRequest();
+      http.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              myObj = JSON.parse(this.responseText);
+              document.getElementById("placeTable").innerHTML =document.querySelector("tr").outerHTML + "";
+              for (i in myObj) {
+
+                var row = document.createElement("tr");
+                row.setAttribute("onclick", "reCenter(" + i + ")");
+                    var col = document.createElement("td");
+                        var id = document.createTextNode(myObj[i].id);
+                        col.appendChild(id);
+                    var col1 = document.createElement("td");
+                        var title = document.createTextNode(myObj[i].title);
+                        col1.appendChild(title);
+                    var col2 = document.createElement("td");
+                        var type = document.createTextNode(myObj[i].type);
+                        col2.appendChild(type);
+                    var col3 = document.createElement("td");
+                        var a = document.createElement("a");
+                        a.setAttribute("href", "http://localhost:8080/Coordinates/placeDetails.html?id=" + myObj[i].id);
+                        var edit = document.createTextNode("details");
+                        a.appendChild(edit);
+                        col3.appendChild(a);
+                row.appendChild(col);
+                row.appendChild(col1);
+                row.appendChild(col2);
+                row.appendChild(col3);
+
+                document.getElementById("placeTable").appendChild(row);
+            }
+
+          }
+      };
+      http.open("GET", "http://localhost:9000/api/places", true);
+      http.send();
+      }
+
+      function reCenter(i) {
+        var coor = markers[i].getPosition();
+        var center = new google.maps.LatLng(coor.lat(), coor.lng());
+        map.panTo(center);
+        map.setZoom(14);
+    }
+
+    function newPage() {
+        window.location.href="http://localhost:8080/Coordinates/createPlace.html";
+    }
+    </script>
+    <div class="container-fluid" style="display: block;">
+    <div class="row content">
+
+        <div class="col-sm-3" style="margin-top:6px">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <button onclick="newPage()" type="button" style="float:right; width:160px; margin-right:4px" class="btn btn-success">New Place</button>
+
+                    <p><b>Type:</b></p>
+                    <p>1=ที่อยู่อาศัย,2=ร้านค้า,3=อื่นๆ</p>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                <table id="placeTable">
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th></th>
+                    </tr>
+                </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-16" id = "map" style = "width:900px; height:582px;"></div>
+    </div>
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+                    async defer></script>
+</body>
+</html>
